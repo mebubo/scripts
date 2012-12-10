@@ -10,9 +10,9 @@ fi
 COOKIE_HEADER="$1"
 INDEX_URL="$2"
 
-EXTRACT_PATTERN=${EXTRACT_PATTERN-.mp4}
-
 shift 2
+
+EXTRACT_PATTERN="${EXTRACT_PATTERN-.mp4}"
 
 _wget () {
     wget -c --content-disposition --header "$COOKIE_HEADER" "$@"
@@ -24,14 +24,14 @@ dl_index () {
 
 extract_urls () {
     grep "$EXTRACT_PATTERN" | while read LINE; do
-        URL=${LINE#*href=\"}
-        echo ${URL%\"}
+        URL="${LINE#*href=\"}"
+        echo "${URL%\"}"
     done
 }
 
 dl_files () {
     while read URL; do
-        _wget $URL
+        _wget "$URL"
     done
 }
 
