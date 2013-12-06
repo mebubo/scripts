@@ -1,15 +1,21 @@
-#!/bin/sh
+#!/bin/bash
 
 DATE=`date "+%Y%m%d-%H%M%S"`
-SRC=/home/mebubo/annex/
-REMOTE=mebubo@192.168.0.65
-DEST=/store/sdbackup/backups/mebub
-NAME=annex
-EMAIL=dolgovs@gmail.com
 LOG=$(mktemp)
 
+if [ ! $# -eq 3 ] && [ ! $# -eq 2 ]; then
+    echo "Usage $0 <remote:source> <destination> [email]"
+    exit 1
+fi
+
+SRC=$1
+DEST=$2
+EMAIL=$3
+
+NAME=$(basename $SRC)
+
 _rsync () {
-    rsync -aH --log-file=$LOG --link-dest=../current $REMOTE:$SRC $DEST/incomplete-$DATE
+    rsync -aH --log-file=$LOG --link-dest=../current $SRC $DEST/incomplete-$DATE
 }
 
 update_symlink () {
@@ -30,7 +36,9 @@ backup () {
 }
 
 _mail () {
-    mail -s "$STATUS backup $NAME $REMOTE $DATE" $EMAIL
+    if [ -n "$EMAIL" ]; then
+        mail -s "$STATUS backup $SRC $DATE" $EMAIL
+    fi
 }
 
 email () {
