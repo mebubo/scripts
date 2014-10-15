@@ -1,24 +1,18 @@
 #!/bin/bash
 
-BOOK_DIR=~/documents/books/pdf
+BOOK_DIR=~/annex/documents/books
 
-list_fullnames () {
-    find $BOOK_DIR -name \*.pdf
-}
-
-get_basenames () {
-    while read NAME; do
-        echo $(basename "$NAME")
-    done
+list () {
+    find $BOOK_DIR -type f
 }
 
 choose () {
-    list_fullnames | get_basenames | dmenu
+    list | dmenu -l 20 -b -i
 }
 
 open () {
     local BOOK="$1"
-    evince $BOOK_DIR/"$BOOK"
+    test -f "$BOOK" && xdg-open "$BOOK"
 }
 
 open "$(choose)"
