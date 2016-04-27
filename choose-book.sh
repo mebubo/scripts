@@ -7,7 +7,7 @@ list () {
 }
 
 choose () {
-    list | dmenu -l 20 -b -i
+    list | rofi -dmenu
 }
 
 open () {
