@@ -28,6 +28,10 @@ case $ACTION in
         sleep 2
         xrandr --output LVDS1 --off --output DP1 --auto
         pactl --server "$PULSE_SERVER" set-card-profile 0 output:hdmi-stereo
+
+        xrandr --dpi 96
+        xset r rate 200 60
+        setxkbmap -layout us,ru -variant ,phonetic -option grp:menu_toggle,grp_led:caps,terminate:ctrl_alt_bksp,ctrl:nocaps,compose:ralt
         ;;
     off)
         xrandr --output LVDS1 --auto --output DP1 --off
