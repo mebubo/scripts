@@ -13,7 +13,7 @@ case "$MODE" in
                 ACTION=off
                 ;;
             connected)
-                ACTION=on
+                exit
                 ;;
         esac
         ;;
