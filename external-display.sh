@@ -25,8 +25,7 @@ PULSE_SERVER="unix:/run/user/$UID/pulse/native"
 
 case $ACTION in
     on)
-        sleep 2
-        xrandr --output LVDS1 --off --output DP1 --auto
+        xrandr --output LVDS-1 --off --output DP-1 --auto
         pactl --server "$PULSE_SERVER" set-card-profile 0 output:hdmi-stereo
 
         xrandr --dpi 96
@@ -34,7 +33,7 @@ case $ACTION in
         setxkbmap -layout us,ru -variant ,phonetic -option grp:menu_toggle,grp_led:caps,terminate:ctrl_alt_bksp,ctrl:nocaps,compose:ralt
         ;;
     off)
-        xrandr --output LVDS1 --auto --output DP1 --off
+        xrandr --output LVDS-1 --auto --output DP-1 --off
         pactl --server "$PULSE_SERVER" set-card-profile 0 output:analog-stereo+input:analog-stereo
         ;;
 esac &
