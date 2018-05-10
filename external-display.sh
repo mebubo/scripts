@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+test -S /tmp/.X11-unix/X0 || exit 0
 
 STATUS_FILE=/sys/class/drm/card0-DP-1/status
 STATUS=$(cat $STATUS_FILE)
@@ -6,6 +8,16 @@ MODE=$1
 case "$MODE" in
     on|off)
         ACTION=$MODE
+        ;;
+    auto)
+        case $STATUS in
+            disconnected)
+                ACTION=off
+                ;;
+            connected)
+                ACTION=on
+                ;;
+        esac
         ;;
     *)
         case $STATUS in
